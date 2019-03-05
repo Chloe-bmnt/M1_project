@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" >
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<script type="text/javascript" src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+		<script>
+			$(document).ready( function () {
+						$('#myTable').DataTable({
+							 "scrollX": true
+							});
+						} );
+						$('#myTable').DataTable( {
+							"columnDefs": [
+							{ "width": "20%", "targets": 0 }
+							]
+						} );
+		</script>
+		<style> th,td{white-space: nowrap;}</style>
+	</head>
+	<body>
+	<table id="myTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Gene Symbol</th>
+                <th>Species</th>
+                <th>ID uniprot</th>
+                <th>Protein names</th>
+                <th>Protein interactions</th>
+                <th>ID PDB</th>
+                <th>ID ensembl</th>
+                <th>Transcript ensembl</th>
+                <th>Protein ensembl</th>
+                <th>Gene ncbi</th>
+                <th>transcrit Refseq</th>
+                <th>Protein Refseq</th>
+                <th>Biological process GO</th>
+                <th>Molecular function GO</th>
+                <th>Cellular component GO</th>
+                <th>Functional signature Prosite </th>
+                <th>Functional signature Pfam </th>
+                <th>ID KEGG </th>
+                <th>Pathways KEGG</th>
+                
+            </tr>
+        </thead>
+        <tbody>
