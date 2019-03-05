@@ -63,6 +63,8 @@ def ensembl_orthologue_fct(organism, id_ens, outputfile):
 				if r3.ok :
 					url_final = r3.url
 					outputfile.write("<a href=\"{}\">Orthologue : {}</a><br>\n".format(url_final, id_ens))
+					outputfile.write('<a href=\"http://www.{}.org/{}/Location/View?db=core;g={}"> Genome Browser Ensembl</a><br>\n'.format(db_list, organism, id_ens))
+					outputfile.write('<a href=\"http://genome.ucsc.edu/cgi-bin/hgTracks?org={}&db={}"> Genome Browser UCSC</a><br>\n'.format(organism, db_list))
 					break
 				else :
 					outputfile.write("No orthologue")
