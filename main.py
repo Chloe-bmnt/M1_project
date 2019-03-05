@@ -1,6 +1,6 @@
 import re
 import sys
-from uniprot_name import *
+from uniprot import *
 from ensembl import *
 from ncbi import *
 from GO import *

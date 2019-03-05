@@ -66,7 +66,15 @@ def pdb_fct(id_prot, outputfile):
 		list_pdb=result4.split("\n")
 		for pdb in list_pdb :
 			outputfile.write("<a href=\"https://www.rcsb.org/structure/" + pdb + "\">" + pdb + "</a><br>\n")
-
+			id_struct = requests.get("http://www.rcsb.org/pdb/rest/customReport.csv?pdbids=" + pdb +"&customReportColumns=structureId,structureTitle,&format=csv")
+			list_id_struct = id_struct.text.split("<br />")
+			del list_id_struct[0]  
+			del list_id_struct[len(list_id_struct)-1] 
+			for id_struct in list_id_struct:  
+				pdb_list = id_struct.split(',')   
+				structure = pdb_list[1]
+				structure2 = re.sub('\"', '', structure) 
+				outputfile.write("<a href=\"https://www.rcsb.org/structure/" + pdb + "\">" + structure2 + "</a><br>\n")
 
 	
 
