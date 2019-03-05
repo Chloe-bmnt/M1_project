@@ -25,8 +25,6 @@ def ensembl_id_fct(gene, organism):
 def ensembl_trans_prot_fct(id_ens):
 	server2 = "https://rest.ensembl.org"
 	ext2 = "/lookup/id/{}?expand=1".format(id_ens)
-	 
-
 	r2 = requests.get(server2+ext2, headers={ "Content-Type" : "application/json"})
 	 
 	if not r2.ok:
@@ -35,17 +33,7 @@ def ensembl_trans_prot_fct(id_ens):
 		r2 = requests.get(server2+ext2, headers={ "Content-Type" : "application/json"})
 	 
 	decoded2 = r2.json()
-	return decoded2["Transcript"]
-
-
-
-def ensembl_orthologue_fct(organism, id_ens):
-		r4=requests.get("https://rest.ensembl.org/homology/id/{}?format=condensed;type=orthologues;content-type=application/json".format(id_ens))
-		result=r4.json()
-		if len(result["data"])==0:
-			r4=requests.get("https://rest.ensemblgenomes.org/homology/id/{}?format=condensed;type=orthologues;content-type=application/json".format(id_ens))
-			result=r4.json()
-		
+	return decoded2["Transcript"]	
 		
 		
 def ensembl_orthologue_fct(organism, id_ens, outputfile):
@@ -54,20 +42,23 @@ def ensembl_orthologue_fct(organism, id_ens, outputfile):
 		if len(result["data"])==0:
 			r4=requests.get("https://rest.ensemblgenomes.org/homology/id/{}?format=condensed;type=orthologues;content-type=application/json".format(id_ens))
 			result=r4.json()
-		
-		
-		if len(result["data"][0]["homologies"])>1:
-			db_list = ["ensembl", "plants.ensembl", "bacteria.ensembl", "fungi.ensembl", "protists.ensembl", "metazoa.ensembl"]
+			
+		db_list = ["ensembl", "plants.ensembl", "bacteria.ensembl", "fungi.ensembl", "protists.ensembl", "metazoa.ensembl"]
+		if len(result["data"][0]["homologies"]): #on vérifie qu'il y a des orthologues
 			for db in db_list :
 				r3 = requests.get("http://{}.org/{}/Gene/Compara_Ortholog?db=core;g={}".format(db, organism, id_ens))
 				if r3.ok :
 					url_final = r3.url
 					outputfile.write("<a href=\"{}\">Orthologue : {}</a><br>\n".format(url_final, id_ens))
-					outputfile.write('<a href=\"http://www.{}.org/{}/Location/View?db=core;g={}"> Genome Browser Ensembl</a><br>\n'.format(db_list, organism, id_ens))
-					outputfile.write('<a href=\"http://genome.ucsc.edu/cgi-bin/hgTracks?org={}&db={}"> Genome Browser UCSC</a><br>\n'.format(organism, db_list))
+					outputfile.write('<a href=\"http://www.{}.org/{}/Location/View?db=core;g={}"> Genome Browser Ensembl</a><br>\n'.format(db, organism, id_ens))
+					outputfile.write('<a href=\"http://genome.ucsc.edu/cgi-bin/hgTracks?org={}&db={}"> Genome Browser UCSC</a><br>\n'.format(organism, db))
 					break
-				else :
-					outputfile.write("No orthologue")
+		else :
+			outputfile.write("No ortholog" + "<br>\n")
+			for db in db_list :
+				outputfile.write('<a href=\"http://www.{}.org/{}/Location/View?db=core;g={}"> Genome Browser Ensembl</a><br>\n'.format(db, organism, id_ens))
+				outputfile.write('<a href=\"http://genome.ucsc.edu/cgi-bin/hgTracks?org={}&db={}"> Genome Browser UCSC</a><br>\n'.format(organism, db))
+				break
 				
 			
 		

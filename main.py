@@ -10,22 +10,22 @@ from pfam import *
 
 
 #récuperer les infos
-with open('GeneSymbols.txt','r') as f:
-	l = f.read().splitlines()
-	
-	
-tempfile = open('table.html','r')
-outputfile = open('result.html','w')
-outputfile.write(tempfile.read())
-	
-#~ relative_path = sys.path[0]
-#~ tempfile = open(relative_path + 'table.html','r')
-#~ outputfile = open(relative_path + 'result.html','w')
-#~ tempfile_end = open(relative_path + 'end_template.html', 'r')
-#~ outputfile.write(tempfile.read())
-
-#~ with open(sys.argv[1],'r') as f:
+#~ with open('GeneSymbols.txt','r') as f:
 	#~ l = f.read().splitlines()
+	
+	
+#~ tempfile = open('table.html','r')
+#~ outputfile = open('result.html','w')
+#~ outputfile.write(tempfile.read())
+	
+relative_path = sys.path[0]
+tempfile = open(relative_path + '/table.html','r')
+outputfile = open(relative_path + '/result.html','w')
+tempfile_end = open(relative_path + '/end_template.html', 'r')
+outputfile.write(tempfile.read())
+
+with open(sys.argv[1],'r') as f:
+	l = f.read().splitlines()
 
 #récuperer les gènes et le nom des organismes à partir du fichier GeneSymbols.txt
 for line in l:
@@ -61,7 +61,7 @@ for line in l:
 		id_ens=list_ensembl[k]["id"]
 		ensembl_trans_prot_fct(id_ens) #appel de la fonction transcrits et proteines ensembl
 		k+=1
-		outputfile.write(id_ens + "<br>")
+		outputfile.write('<a href=\"https://www.ensembl.org/{0}/Gene/Summary?db=core;g={1}">{1}</a><br>\n'.format(organism2, id_ens))
 		list_trans_prot=ensembl_trans_prot_fct(id_ens)
 		ensembl_orthologue_fct(organism2, id_ens, outputfile) #appel de la fonction orthologues ensembl
 	outputfile.write("</td>\n")
@@ -78,7 +78,7 @@ for line in l:
 		i=0
 		for element in list_trans_prot:
 			transcript=list_trans_prot[i]["id"]
-			outputfile.write(transcript + "<br>")
+			outputfile.write('<a href=\"https://www.ensembl.org/{0}/Transcript/Summary?db=core;t={1}">{1}</a><br>\n'.format(organism2, transcript))
 			i+=1
 	outputfile.write("</td>\n")
 	
@@ -93,13 +93,14 @@ for line in l:
 				
 		j=0
 		for element in list_trans_prot:
+			transcript=list_trans_prot[j]["id"]
 			if list_trans_prot[j]["biotype"]=="protein_coding" :
 				protein=list_trans_prot[j]["Translation"]["id"]
-				outputfile.write(protein + "<br>")	
+				outputfile.write('<a href=\"https://www.ensembl.org/{0}/Transcript/ProteinSummary?db=core;t={1}">{2}</a><br>\n'.format(organism2, transcript, protein))
 				
-			elif list_trans_prot[j]["biotype"]=="LRG_gene":		
+			elif list_trans_prot[j]["biotype"]=="LRG_gene":	
 				protein=list_trans_prot[j]["Translation"]["id"]
-				outputfile.write(protein + "<br>")	
+				outputfile.write('<a href=\"https://www.ensembl.org/{0}/Transcript/ProteinSummary?db=core;t={1}">{2}</a><br>\n'.format(organism2, transcript, protein))	
 			j+=1	
 	outputfile.write("</td>\n")
 	

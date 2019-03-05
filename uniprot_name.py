@@ -15,28 +15,31 @@ def uniprot_fct(gene, organism, outputfile):
 	i=0
 	for element in result1 :
 		result2=result1[i].split("\t")
+		result2[1] = re.sub('( [\(|\[].*[\)|\]])', '', result2[1])
+		
 		i+=1
 		
 		liste.append(result2)
-		outputfile.write("<a href=\"https://www.uniprot.org/uniprot/" +result2[0] + "\">" +result2[0] + "</a><br>\n" )
+		outputfile.write("<a href=\"https://www.uniprot.org/uniprot/" + result2[0] + "\">" + result2[0] + "</a><br>\n" )
 	outputfile.write("</td>")
 	outputfile.write("<td>")
 	i=0
 	for element in result1 :
 		result2=result1[i].split("\t")
+		result2[1] = re.sub('( [\(|\[].*[\)|\]])', '', result2[1])
 		i+=1
 		
-		liste.append(result2)
 		outputfile.write(result2[1] + "<br>\n")
 	outputfile.write("</td>")
 	return liste
 	
 	
 def string_fct(id_prot,outputfile):	
-		r2 = requests.get("https://string-db.org/api/image/network?identifiers={}".format(id_prot))
-		if r2.ok :	
-			result=r2.url
-			outputfile.write("<a href=\"" + result + "\"> interaction map" + " </a><br>\n")	
+	r2 = requests.get("https://string-db.org/api/image/network?identifiers={}".format(id_prot))
+	if r2.ok :	
+		result=r2.url
+		outputfile.write("<iframe src=\"" + result + "\"> " + " </iframe><br>\n")
+		outputfile.write("<a href=\"" + result + "\"> interaction map" + " </a><br>\n")	
 		
 
 def pdb_fct(id_prot, outputfile):

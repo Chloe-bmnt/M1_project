@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<style type="text/css">
+        table{
+             border: 1px solid black;
+                }
+        th{
+			 text-align: center;
+             border-left : 1px solid black;
+             border-right : 1px solid black;
+                }  
+        td{
+			 text-align: center;
+             border-left : 1px solid black;
+             border-right : 1px solid black;
+                }   
+        </style>
 		<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" >
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 		<script type="text/javascript" src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -10,11 +25,7 @@
 							 "scrollX": true
 							});
 						} );
-						$('#myTable').DataTable( {
-							"columnDefs": [
-							{ "width": "20%", "targets": 0 }
-							]
-						} );
+						
 		</script>
 		<style> th,td{white-space: nowrap;}</style>
 	</head>

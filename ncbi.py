@@ -46,6 +46,6 @@ def refseq_fct(db_refseq, type_refseq, organism, gene, outputfile):
 						outputfile.write('<a href="https://www.ncbi.nlm.nih.gov/nuccore/{0}">{0}</a><br>\n'.format(id_ref))
 				outputfile.write('</td>\n')
 			else:
-				outpufile.write('<td>No data available</td>\n')
+				outputfile.write('<td>No data available</td>\n')
 		else:
-			outpufile.write('<td>No data available</td>\n')
+			outputfile.write('<td>No data available</td>\n')
